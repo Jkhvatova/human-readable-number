@@ -1,5 +1,5 @@
 module.exports = function toReadable(number) {
-    const ones = [
+    var ones = [
         "",
         "one",
         "two",
@@ -21,7 +21,7 @@ module.exports = function toReadable(number) {
         "eighteen",
         "nineteen",
     ];
-    const tens = [
+    var tens = [
         "",
         "",
         "twenty",
@@ -33,13 +33,17 @@ module.exports = function toReadable(number) {
         "eighty",
         "ninety",
     ];
+    if (number === 0) {
+        return "zero";
+    }
+    return convertHundreds(number).trim();
 
     function convertHundreds(number) {
         if (number > 99) {
             return (
                 ones[Math.floor(number / 100)] +
                 " hundred " +
-                convertTens[num % 100]
+                convertTens(number % 100)
             );
         } else {
             return convertTens(number);
@@ -48,9 +52,9 @@ module.exports = function toReadable(number) {
 
     function convertTens(number) {
         if (number < 20) {
-            return tens[number];
+            return ones[number];
         } else {
-            return tens[Math.floor(number / 10)] + " " + ones[num % 10];
+            return tens[Math.floor(number / 10)] + " " + ones[number % 10];
         }
     }
 };
